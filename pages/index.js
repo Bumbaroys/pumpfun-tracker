@@ -1,33 +1,23 @@
-// File: pages/index.jsx
+// pages/index.js
 
-import { useEffect, useState } from 'react';
+import Head from 'next/head';
 import TokenCard from '../components/TokenCard';
+import tokens from '../lib/getFinalTokens';
 
-export default function Home() {
-  const [tokens, setTokens] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch('/api/tokens')
-      .then((res) => res.json())
-      .then((data) => {
-        setTokens(data);
-        setLoading(false);
-      });
-  }, []);
-
+export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gray-950 text-white p-4 font-sans">
-      <h1 className="text-3xl font-bold mb-4 text-center">🚀 Final Meme Coins Tracker</h1>
-      {loading ? (
-        <p className="text-center">Loading tokens...</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {tokens.map((token) => (
-            <TokenCard key={token.address} token={token} />
+    <>
+      <Head>
+        <title>PumpFun Token Tracker</title>
+      </Head>
+      <main className="min-h-screen bg-black text-white p-6">
+        <h1 className="text-3xl font-bold text-teal-400 mb-4">🚀 PumpFun Trending Tokens</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {tokens.map((token, idx) => (
+            <TokenCard key={idx} token={token} />
           ))}
         </div>
-      )}
-    </div>
+      </main>
+    </>
   );
 }
